@@ -1,7 +1,7 @@
 package AST;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MethodDeclList extends ASTNode {
    private List<MethodDecl> list;

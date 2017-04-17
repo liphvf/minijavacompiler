@@ -1,10 +1,13 @@
-import Scanner.*;
-import Parser.*;
-import AST.*;
-import AST.Visitor.*;
+package Tests;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.List;
+
+import AST.Statement;
+import AST.Visitor.PrettyPrintVisitor;
+import Parser.parser;
+import Scanner.scanner;
 import java_cup.runtime.Symbol;
-import java.util.*;
-import java.io.*;
 
 public class TestParser {
     public static void main(String [] args) {

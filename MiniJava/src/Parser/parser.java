@@ -5,10 +5,17 @@
 
 package Parser;
 
-import AST.*;
-import java.util.*;
-import java_cup.runtime.*;
-import java_cup.runtime.XMLElement;
+import java.util.LinkedList;
+import java.util.List;
+
+import AST.Assign;
+import AST.Display;
+import AST.Exp;
+import AST.Identifier;
+import AST.IdentifierExp;
+import AST.Plus;
+import AST.Statement;
+import java_cup.runtime.Symbol;
 
 /** CUP v0.11b 20141202 (SVN rev 60) generated parser.
   */

@@ -1,7 +1,7 @@
 package AST;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ExpList extends ASTNode{
    private List<Exp> list;

@@ -16,3 +16,11 @@
 - `JFLEX_HOME` : `C:\jflex-1.6.1`
 - adiciona ao path `%JFLEX_HOME%\bin`
  
+# CUPS
+- `CLASSPATH` : `C:\cups`
+
+# BNF:
+
+[BNF](http://www.cambridge.org/resources/052182060X/MCIIJ2e/grammar.html)
+[CUPS](https://www.cs.princeton.edu/~appel/modern/java/CUP/)
+

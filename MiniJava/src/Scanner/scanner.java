@@ -9,8 +9,8 @@
 
 package Scanner;
 
-import java_cup.runtime.*;
 import Parser.sym;
+import java_cup.runtime.Symbol;
 
 
 /**

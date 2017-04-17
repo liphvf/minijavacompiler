@@ -1,6 +1,40 @@
 package AST.Visitor;
 
-import AST.*;
+import AST.And;
+import AST.ArrayAssign;
+import AST.ArrayLength;
+import AST.ArrayLookup;
+import AST.Assign;
+import AST.Block;
+import AST.BooleanType;
+import AST.Call;
+import AST.ClassDeclExtends;
+import AST.ClassDeclSimple;
+import AST.Display;
+import AST.False;
+import AST.Formal;
+import AST.Identifier;
+import AST.IdentifierExp;
+import AST.IdentifierType;
+import AST.If;
+import AST.IntArrayType;
+import AST.IntegerLiteral;
+import AST.IntegerType;
+import AST.LessThan;
+import AST.MainClass;
+import AST.MethodDecl;
+import AST.Minus;
+import AST.NewArray;
+import AST.NewObject;
+import AST.Not;
+import AST.Plus;
+import AST.Print;
+import AST.Program;
+import AST.This;
+import AST.Times;
+import AST.True;
+import AST.VarDecl;
+import AST.While;
 
 public interface Visitor {
   // Display added for toy example language.  Not used in MiniJava AST

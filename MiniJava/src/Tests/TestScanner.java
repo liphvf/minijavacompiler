@@ -1,7 +1,10 @@
-import Scanner.*;
+package Tests;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
 import Parser.sym;
+import Scanner.scanner;
 import java_cup.runtime.Symbol;
-import java.io.*;
 
 public class TestScanner {
     public static void main(String [] args) {
