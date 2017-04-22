@@ -1,0 +1,151 @@
+package Parser;
+
+import AST.*;
+import java.util.*;
+import java_cup.runtime.*;
+
+parser code{: 
+
+ public void report_error(String message, Object info)
+    {
+      Symbol symbol = (Symbol)info;
+      System.err.print(message);
+      System.err.flush();
+    
+      if (info instanceof Symbol) {
+		if (((Symbol)info).left != -1) {
+	  		System.err.println(" at symbol " + symbol + " in line " + symbol.left + ":" + symbol.right);
+		} else {
+			System.err.println("");
+		}
+      } else {
+	      System.err.println("");
+      }
+    }
+    
+ :};
+
+/* TERMINAIS */
+
+terminal SYSTEM_OUT_PRINTLN;
+terminal INSTANCEOF;
+terminal PRIVATE;
+terminal PROTECTED;
+terminal BECOMESBECOMES;
+terminal DIFBECOMES;
+terminal SUPER;
+terminal PLUS, MINUS, TIMES, AND, LT, RT, RTEQ, LTEQ,BECOMES, NOT, DOT, COMMA;
+terminal LBRACKET, RBRACKET,LPAREN, RPAREN, LBRACE, RBRACE,SEMICOLON;
+terminal String IDENTIFIER;
+terminal Integer INTEGER_LITERAL;
+terminal BOOLEAN_TYPE;
+terminal INTEGER_TYPE;
+terminal STRING;
+terminal IF, ELSE, WHILE, RETURN;
+terminal CLASS, EXTENDS;
+terminal PUBLIC, STATIC, VOID, MAIN;
+terminal TRUE, FALSE, THIS;
+terminal LENGTH;
+terminal NEW;
+
+
+/* NaO TERMINAIS */
+
+nonterminal Program program;
+nonterminal MainClass mainClass;
+nonterminal Statement statement;
+nonterminal StatementList statementList;
+nonterminal MethodDecl methodDecl;
+nonterminal MethodDeclList methodDeclList;
+nonterminal VarDecl varDeclaration;
+nonterminal VarDeclList varDeclarationList;
+nonterminal Exp expression;
+nonterminal ExpList expressionList;
+nonterminal ClassDecl classDecl;
+nonterminal ClassDeclList classDeclList;
+nonterminal Formal formalParameter;
+nonterminal FormalList formalParameterList;
+nonterminal FormalList formalParameterListAndParens;
+nonterminal ExpList methodInvocationParameterList;
+nonterminal ArrayLength arrayLength;
+nonterminal ArrayLookup arrayLookup;
+nonterminal Identifier identifier;
+nonterminal Type type;
+
+/* PRECEDENCIAS */
+
+precedence left PLUS, MINUS;
+precedence left TIMES;
+precedence right NOT, NEW;
+precedence left DOT;
+precedence nonassoc BECOMES;
+precedence nonassoc AND;
+precedence left LT, RT,RTEQ,LTEQ, BECOMESBECOMES,DIFBECOMES,INSTANCEOF;
+
+
+/* PRODUcoes */
+
+program ::= mainClass:m classDeclList:c
+            {: RESULT = new Program(m, c, mleft); :};
+
+mainClass ::= CLASS:c identifier:id LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET identifier:args RPAREN LBRACE statement:stmt RBRACE RBRACE
+            {: RESULT = new MainClass(id, args, stmt, cleft); :};
+            
+            
+type ::= INTEGER_TYPE:i
+            {: RESULT = new IntegerType(ileft); :}
+        | BOOLEAN_TYPE:b
+            {: RESULT = new BooleanType(bleft); :}
+        | identifier:i
+            {: RESULT = new IdentifierType(i.s, ileft); :}
+        | INTEGER_TYPE:i LBRACKET RBRACKET
+            {: RESULT = new IntArrayType(ileft); :};
+            
+statement   ::= identifier:id BECOMES expression:expr SEMICOLON
+                {: RESULT = new Assign(id, expr, idleft); :}
+            | IF:ifKeyword LPAREN expression:expr RPAREN statement:thenStmt ELSE statement:elseStmt
+                {: RESULT = new If(expr, thenStmt, elseStmt, ifKeywordleft); :}
+            | SYSTEM_OUT_PRINTLN:s LPAREN expression:e RPAREN SEMICOLON
+                {: RESULT = new Print(e, sleft); :}
+            | identifier:id LBRACKET expression:e RBRACKET BECOMES expression:v SEMICOLON
+                    {: RESULT = new ArrayAssign(id, e, v, idleft); :}
+            | WHILE:w LPAREN expression:cond RPAREN statement:s
+                    {: RESULT = new While(cond, s, wleft); :}
+            | LBRACE statementList:s RBRACE
+                    {: RESULT = new Block(s, sleft); :};            
+
+expression    ::= IDENTIFIER:name
+            {: RESULT = new IdentifierExp(name, nameleft); :}
+        | expression:arg1 PLUS expression:arg2
+            {: RESULT = new Plus(arg1, arg2, arg1left); :}
+        | expression:arg1 MINUS expression:arg2
+            {: RESULT = new Minus(arg1, arg2, arg1left); :}
+        | expression:arg1 TIMES expression:arg2
+            {: RESULT = new Times(arg1, arg2, arg1left); :}
+        | expression:arg1 AND expression:arg2
+            {: RESULT = new And(arg1, arg2, arg1left); :}
+        | LPAREN expression:expr RPAREN
+            {: RESULT = expr; :}
+        | NOT:not expression:expr
+            {: RESULT = new Not(expr, notleft); :}
+        | TRUE:t
+            {: RESULT = new True(tleft); :}
+        | FALSE:f
+            {: RESULT = new False(fleft); :}
+        | THIS:t
+            {: RESULT = new This(tleft); :}
+        | NEW:n identifier:i LPAREN RPAREN
+            {: RESULT = new NewObject(i, nleft); :}
+        | arrayLength:l
+            {: RESULT = l; :}
+        | arrayLookup:l
+            {: RESULT = l; :}
+        | NEW:n INTEGER_TYPE LBRACKET expression:e RBRACKET
+            {: RESULT = new NewArray(e, nleft); :}
+        | expression:e DOT identifier:id methodInvocationParameterList:l
+            {: RESULT = new Call(e, id, l, eleft); :}
+        | INTEGER_LITERAL:i
+            {: RESULT = new IntegerLiteral(i.intValue(), ileft); :};
+            
+identifier  ::= IDENTIFIER:id
+                {: RESULT = new Identifier(id, idleft); :};

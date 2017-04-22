@@ -3,7 +3,6 @@
 ;;;  jflex-mode
 
 ;;;  author: Gerwin Klein <lsf@jflex.de>
-;;;  $Revision: 839 $, $Date: 2014-06-15 01:24:32 +1000 (Sun, 15 Jun 2014) $
 
 (require 'derived)
 (require 'font-lock)
