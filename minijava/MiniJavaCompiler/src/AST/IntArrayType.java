@@ -5,7 +5,7 @@ public class IntArrayType extends Type {
   public IntArrayType(int ln) {
     super(ln);
   }
-  public void accept(Visitor v) {
+  public void setNode(Visitor v) {
     v.visit(this);
   }
 }

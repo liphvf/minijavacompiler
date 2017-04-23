@@ -1,22 +1,21 @@
 package AST;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Vector;
 
 public class VarDeclList extends ASTNode {
-   private List<VarDecl> list;
+   private Vector list;
 
    public VarDeclList(int ln) {
       super(ln);
-      list = new ArrayList<VarDecl>();
+      list = new Vector();
    }
 
-   public void add(VarDecl n) {
-      list.add(n);
+   public void addElement(VarDecl n) {
+      list.addElement(n);
    }
 
-   public VarDecl get(int i)  { 
-      return list.get(i); 
+   public VarDecl elementAt(int i)  { 
+      return (VarDecl)list.elementAt(i); 
    }
 
    public int size() { 

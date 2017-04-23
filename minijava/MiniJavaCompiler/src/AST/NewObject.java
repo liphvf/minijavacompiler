@@ -9,7 +9,12 @@ public class NewObject extends Exp {
     i=ai;
   }
 
-  public void accept(Visitor v) {
+  public void setNode(Visitor v) {
     v.visit(this);
   }
+  @Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return i.toString();
+	}
 }

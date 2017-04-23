@@ -8,7 +8,11 @@ public class IdentifierExp extends Exp {
     s=as;
   }
 
-  public void accept(Visitor v) {
+  public void setNode(Visitor v) {
     v.visit(this);
+  }
+  
+  public String toString() {
+	  return s;
   }
 }

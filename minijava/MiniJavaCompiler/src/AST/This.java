@@ -5,7 +5,7 @@ public class This extends Exp {
   public This(int ln) {
     super(ln);
   }
-  public void accept(Visitor v) {
+  public void setNode(Visitor v) {
     v.visit(this);
   }
 }

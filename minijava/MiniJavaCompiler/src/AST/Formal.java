@@ -10,7 +10,7 @@ public class Formal extends ASTNode{
     t=at; i=ai;
   }
 
-  public void accept(Visitor v) {
+  public void setNode(Visitor v) {
     v.visit(this);
   }
 }

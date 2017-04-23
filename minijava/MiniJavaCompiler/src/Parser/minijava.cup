@@ -28,6 +28,8 @@ parser code{:
 /* TERMINAIS */
 
 terminal SYSTEM_OUT_PRINTLN;
+terminal DOUBLE_TYPE;
+terminal FLOAT_TYPE;
 terminal INSTANCEOF;
 terminal PRIVATE;
 terminal PROTECTED;
@@ -49,7 +51,7 @@ terminal LENGTH;
 terminal NEW;
 
 
-/* NaO TERMINAIS */
+/* NAO TERMINAIS */
 
 nonterminal Program program;
 nonterminal MainClass mainClass;
@@ -83,17 +85,49 @@ precedence nonassoc AND;
 precedence left LT, RT,RTEQ,LTEQ, BECOMESBECOMES,DIFBECOMES,INSTANCEOF;
 
 
-/* PRODUcoes */
+/* PRODUCOES */
 
 program ::= mainClass:m classDeclList:c
             {: RESULT = new Program(m, c, mleft); :};
 
 mainClass ::= CLASS:c identifier:id LBRACE PUBLIC STATIC VOID MAIN LPAREN STRING LBRACKET RBRACKET identifier:args RPAREN LBRACE statement:stmt RBRACE RBRACE
             {: RESULT = new MainClass(id, args, stmt, cleft); :};
+
+classDecl ::= CLASS identifier:i LBRACE varDeclarationList:v methodDeclList:m RBRACE
+            {: RESULT = new ClassDeclSimple(i, v, m, ileft); :}
+        | CLASS identifier:i EXTENDS identifier:parent LBRACE varDeclarationList:v methodDeclList:m RBRACE
+            {: RESULT = new ClassDeclExtends(i, parent, v, m, ileft); :};
+
+classDeclList ::=
+            {: RESULT = new ClassDeclList(0); :}
+        | classDecl:c classDeclList:l
+            {: RESULT = l; l.add(c); :};
+                        
+varDeclaration ::= type:t identifier:i SEMICOLON
+        		{: RESULT = new VarDecl(t, i, tleft, null); :}
+            | type:t identifier:i BECOMES expression:expr SEMICOLON
+            	{: RESULT = new VarDecl(t, i, tleft, expr); :};
+
+varDeclarationList ::=
+            {: RESULT = new VarDeclList(0); :}
+        | varDeclarationList:l varDeclaration:e
+            {: RESULT = l; l.add(e); :};
             
+
+methodDecl ::= PUBLIC:p type:t identifier:i formalParameterListAndParens:params LBRACE varDeclarationList:vars statementList:stmts RETURN expression:rv SEMICOLON RBRACE
+            {: RESULT = new MethodDecl(t, i, params, vars, stmts, rv, pleft); :};
+            
+methodDeclList ::=
+            {: RESULT = new MethodDeclList(0); :}
+        | methodDecl:m methodDeclList:l
+            {: RESULT = l; l.add(m); :};
             
 type ::= INTEGER_TYPE:i
             {: RESULT = new IntegerType(ileft); :}
+        | FLOAT_TYPE:f
+            {: RESULT = new FloatType(fleft); :}
+        | DOUBLE_TYPE:d
+            {: RESULT = new DoubleType(dleft); :}
         | BOOLEAN_TYPE:b
             {: RESULT = new BooleanType(bleft); :}
         | identifier:i
@@ -113,6 +147,11 @@ statement   ::= identifier:id BECOMES expression:expr SEMICOLON
                     {: RESULT = new While(cond, s, wleft); :}
             | LBRACE statementList:s RBRACE
                     {: RESULT = new Block(s, sleft); :};            
+                    
+statementList ::= statement:s statementList:l
+            {: RESULT = l; l.add(s); :}
+        |
+            {: RESULT = new StatementList(0); :};
 
 expression    ::= IDENTIFIER:name
             {: RESULT = new IdentifierExp(name, nameleft); :}
@@ -122,6 +161,20 @@ expression    ::= IDENTIFIER:name
             {: RESULT = new Minus(arg1, arg2, arg1left); :}
         | expression:arg1 TIMES expression:arg2
             {: RESULT = new Times(arg1, arg2, arg1left); :}
+        | expression:arg1 LT expression:arg2
+            {: RESULT = new LessThan(arg1, arg2, arg1left); :}
+        | expression:arg1 LTEQ expression:arg2
+            {: RESULT = new LessThanEqual(arg1, arg2, arg1left); :}
+        | expression:arg1 RT expression:arg2
+            {: RESULT = new GreatThan(arg1, arg2, arg1left); :}
+        | expression:arg1 RTEQ expression:arg2
+            {: RESULT = new GreatThanEqual(arg1, arg2, arg1left); :}
+        | expression:arg1 BECOMESBECOMES expression:arg2
+            {: RESULT = new EqualEqual(arg1, arg2, arg1left); :}
+        | expression:arg1 INSTANCEOF expression:arg2
+            {: RESULT = new Instanceof(arg1, arg2, arg1left); :}
+        | expression:arg1 DIFBECOMES expression:arg2
+            {: RESULT = new NotEqual(arg1, arg2, arg1left); :}
         | expression:arg1 AND expression:arg2
             {: RESULT = new And(arg1, arg2, arg1left); :}
         | LPAREN expression:expr RPAREN
@@ -147,5 +200,34 @@ expression    ::= IDENTIFIER:name
         | INTEGER_LITERAL:i
             {: RESULT = new IntegerLiteral(i.intValue(), ileft); :};
             
+expressionList ::= expression:e
+            {: RESULT = new ExpList(eleft); RESULT.add(e); :}
+        | expression:e COMMA expressionList:l
+            {: RESULT = l; RESULT.add(e); :};
+            
 identifier  ::= IDENTIFIER:id
                 {: RESULT = new Identifier(id, idleft); :};
+
+arrayLength ::= expression:e DOT LENGTH
+            {: RESULT = new ArrayLength(e, eleft); :};
+
+arrayLookup ::= expression:e LBRACKET expression:i RBRACKET
+            {: RESULT = new ArrayLookup(e, i, eleft); :};
+
+formalParameter ::= type:t identifier:i
+            {: RESULT = new Formal(t, i, tleft); :};
+
+formalParameterListAndParens ::= LPAREN:l RPAREN
+            {: RESULT = new FormalList(lleft); :}
+        | LPAREN formalParameterList:params RPAREN
+            {: RESULT = params; :};
+
+formalParameterList ::= formalParameter:p COMMA formalParameterList:l
+            {: RESULT = l; l.add(p); :}
+        | formalParameter:p
+            {: RESULT = new FormalList(pleft); RESULT.add(p); :};
+
+methodInvocationParameterList ::= LPAREN:l RPAREN
+            {: RESULT = new ExpList(lleft); :}
+        | LPAREN:l expressionList:e RPAREN
+            {: RESULT = e; :};

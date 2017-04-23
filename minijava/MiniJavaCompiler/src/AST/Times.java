@@ -9,7 +9,7 @@ public class Times extends Exp {
     e1=ae1; e2=ae2;
   }
 
-  public void accept(Visitor v) {
+  public void setNode(Visitor v) {
     v.visit(this);
   }
 }

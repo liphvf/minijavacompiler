@@ -10,8 +10,9 @@ public class If extends Statement {
     e=ae; s1=as1; s2=as2;
   }
 
-  public void accept(Visitor v) {
+  public void setNode(Visitor v) {
     v.visit(this);
   }
+  
 }
 

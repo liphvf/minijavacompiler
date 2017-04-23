@@ -1,22 +1,22 @@
 package AST;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Vector;
 
 public class StatementList extends ASTNode {
-   private List<Statement> list;
+   private Vector list;
 
    public StatementList(int ln) {
       super(ln);
-      list = new ArrayList<Statement>();
+      list = new Vector();
    }
 
-   public void add(Statement n) {
-      list.add(n);
+   public void addElement(Statement n) {
+      // They go in backwards
+      list.add(0, n);
    }
 
-   public Statement get(int i)  { 
-      return list.get(i); 
+   public Statement elementAt(int i)  { 
+      return (Statement)list.elementAt(i); 
    }
 
    public int size() { 

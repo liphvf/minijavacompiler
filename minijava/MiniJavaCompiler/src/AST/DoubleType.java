@@ -2,8 +2,8 @@ package AST;
 
 import AST.Visitor.Visitor;
 
-public class BooleanType extends Type {
-	public BooleanType(int ln) {
+public class DoubleType extends Type {
+	public DoubleType(int ln) {
 		super(ln);
 	}
 

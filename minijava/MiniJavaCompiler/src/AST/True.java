@@ -5,7 +5,13 @@ public class True extends Exp {
   public True(int ln) {
     super(ln);
   }
-  public void accept(Visitor v) {
+  public void setNode(Visitor v) {
     v.visit(this);
   }
+  
+  @Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "true";
+	}
 }

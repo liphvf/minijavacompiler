@@ -9,7 +9,7 @@ public class Identifier extends ASTNode {
     s=as;
   }
 
-  public void accept(Visitor v) {
+  public void setNode(Visitor v) {
     v.visit(this);
   }
 

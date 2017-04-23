@@ -9,7 +9,13 @@ public class Plus extends Exp {
     e1=ae1; e2=ae2;
   }
 
-  public void accept(Visitor v) {
+  public void setNode(Visitor v) {
     v.visit(this);
   }
+  
+  @Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return e1.toString() + " + " + e2.toString();
+	}
 }

@@ -1,25 +1,25 @@
 package AST;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Vector;
 
-public class ClassDeclList extends ASTNode{
-   private List<ClassDecl> list;
+public class ClassDeclList extends ASTNode {
 
-   public ClassDeclList(int ln) {
-      super(ln);
-      list = new ArrayList<ClassDecl>();
-   }
+	private Vector list;
 
-   public void add(ClassDecl n) {
-      list.add(n);
-   }
+	public ClassDeclList(int ln) {
+		super(ln);
+		list = new Vector();
+	}
 
-   public ClassDecl get(int i)  { 
-      return list.get(i); 
-   }
+	public void addElement(ClassDecl n) {
+		list.addElement(n);
+	}
 
-   public int size() { 
-      return list.size(); 
-   }
+	public ClassDecl elementAt(int i) {
+		return (ClassDecl) list.elementAt(i);
+	}
+
+	public int size() {
+		return list.size();
+	}
 }

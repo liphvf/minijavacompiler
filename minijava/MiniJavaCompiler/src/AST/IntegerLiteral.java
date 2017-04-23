@@ -9,7 +9,11 @@ public class IntegerLiteral extends Exp {
     i=ai;
   }
 
-  public void accept(Visitor v) {
+  public void setNode(Visitor v) {
     v.visit(this);
+  }
+  
+  public String toString() {
+	  return String.valueOf(i);
   }
 }

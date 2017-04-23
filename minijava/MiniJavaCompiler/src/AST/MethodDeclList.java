@@ -1,22 +1,21 @@
 package AST;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Vector;
 
 public class MethodDeclList extends ASTNode {
-   private List<MethodDecl> list;
+   private Vector list;
 
    public MethodDeclList(int ln) {
       super(ln);
-      list = new ArrayList<MethodDecl>();
+      list = new Vector();
    }
 
-   public void add(MethodDecl n) {
-      list.add(n);
+   public void addElement(MethodDecl n) {
+      list.addElement(n);
    }
 
-   public MethodDecl get(int i)  { 
-      return list.get(i); 
+   public MethodDecl elementAt(int i)  { 
+      return (MethodDecl)list.elementAt(i); 
    }
 
    public int size() { 

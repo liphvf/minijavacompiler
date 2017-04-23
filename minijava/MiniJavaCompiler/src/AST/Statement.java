@@ -5,5 +5,5 @@ public abstract class Statement extends ASTNode {
     public Statement(int ln) {
         super(ln);
     }
-    public abstract void accept(Visitor v);
+    public abstract void setNode(Visitor v);
 }

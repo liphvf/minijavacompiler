@@ -2,9 +2,12 @@ package AST;
 
 import AST.Visitor.Visitor;
 
-public class BooleanType extends Type {
-	public BooleanType(int ln) {
+public class DoubleLiteral extends Exp {
+	public int d;
+
+	public DoubleLiteral(int af, int ln) {
 		super(ln);
+		d = af;
 	}
 
 	public void setNode(Visitor v) {

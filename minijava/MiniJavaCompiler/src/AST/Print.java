@@ -9,7 +9,7 @@ public class Print extends Statement {
     e=ae; 
   }
 
-  public void accept(Visitor v) {
+  public void setNode(Visitor v) {
     v.visit(this);
   }
 }

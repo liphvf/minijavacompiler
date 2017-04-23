@@ -10,23 +10,32 @@ import AST.BooleanType;
 import AST.Call;
 import AST.ClassDeclExtends;
 import AST.ClassDeclSimple;
-import AST.Display;
+import AST.DoubleLiteral;
+import AST.DoubleType;
+import AST.EqualEqual;
 import AST.False;
+import AST.FloatLiteral;
+import AST.FloatType;
 import AST.Formal;
+import AST.GreatThan;
+import AST.GreatThanEqual;
 import AST.Identifier;
 import AST.IdentifierExp;
 import AST.IdentifierType;
 import AST.If;
+import AST.Instanceof;
 import AST.IntArrayType;
 import AST.IntegerLiteral;
 import AST.IntegerType;
 import AST.LessThan;
+import AST.LessThanEqual;
 import AST.MainClass;
 import AST.MethodDecl;
 import AST.Minus;
 import AST.NewArray;
 import AST.NewObject;
 import AST.Not;
+import AST.NotEqual;
 import AST.Plus;
 import AST.Print;
 import AST.Program;
@@ -37,8 +46,6 @@ import AST.VarDecl;
 import AST.While;
 
 public interface Visitor {
-  // Display added for toy example language.  Not used in MiniJava AST
-  public void visit(Display n);
   public void visit(Program n);
   public void visit(MainClass n);
   public void visit(ClassDeclSimple n);
@@ -58,6 +65,8 @@ public interface Visitor {
   public void visit(ArrayAssign n);
   public void visit(And n);
   public void visit(LessThan n);
+  public void visit(GreatThan n);
+  public void visit(GreatThanEqual n);
   public void visit(Plus n);
   public void visit(Minus n);
   public void visit(Times n);
@@ -73,4 +82,12 @@ public interface Visitor {
   public void visit(NewObject n);
   public void visit(Not n);
   public void visit(Identifier n);
+  public void visit(FloatLiteral n);
+  public void visit(FloatType n);
+  public void visit(LessThanEqual n);
+  public void visit(DoubleLiteral n);
+  public void visit(DoubleType n);
+  public void visit(EqualEqual n);
+  public void visit(NotEqual n);
+  public void visit(Instanceof n);
 }

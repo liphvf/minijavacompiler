@@ -10,8 +10,9 @@ public class While extends Statement {
     e=ae; s=as; 
   }
 
-  public void accept(Visitor v) {
+  public void setNode(Visitor v) {
     v.visit(this);
   }
+  
 }
 

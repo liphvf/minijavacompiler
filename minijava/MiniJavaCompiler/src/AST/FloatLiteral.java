@@ -1,12 +1,12 @@
 package AST;
 import AST.Visitor.Visitor;
 
-public class NewArray extends Exp {
-  public Exp e;
-  
-  public NewArray(Exp ae, int ln) {
+public class FloatLiteral extends Exp {
+  public int f;
+
+  public FloatLiteral(int af, int ln) {
     super(ln);
-    e=ae; 
+    f=af;
   }
 
   public void setNode(Visitor v) {

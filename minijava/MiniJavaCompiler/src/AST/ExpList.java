@@ -1,22 +1,21 @@
 package AST;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Vector;
 
 public class ExpList extends ASTNode{
-   private List<Exp> list;
+   private Vector list;
 
    public ExpList(int ln) {
       super(ln);
-      list = new ArrayList<Exp>();
+      list = new Vector();
    }
 
-   public void add(Exp n) {
-      list.add(n);
+   public void addElement(Exp n) {
+      list.addElement(n);
    }
 
-   public Exp get(int i)  { 
-      return list.get(i); 
+   public Exp elementAt(int i)  { 
+      return (Exp)list.elementAt(i); 
    }
 
    public int size() { 

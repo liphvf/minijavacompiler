@@ -12,7 +12,7 @@ public class MiniJava {
 
 	public static void main(String[] args) {
 		try {
-        	File f = new File("C:\\Users\\liphvf\\Downloads\\TEST.java");
+        	File f = new File("C:\\Users\\liphvf\\Documents\\minijavacompiler\\minijava\\MiniJavaCompiler\\testFile\\Test.java");
 			InputStream is = new FileInputStream(f);
 
 			scanner s = new scanner(new BufferedReader(new InputStreamReader(is)));

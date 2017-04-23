@@ -1,22 +1,22 @@
 package AST;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Vector;
 
 public class FormalList extends ASTNode {
-   private List<Formal> list;
+   private Vector list;
 
    public FormalList(int ln) {
       super(ln);
-      list = new ArrayList<Formal>();
+      list = new Vector();
    }
 
-   public void add(Formal n) {
-      list.add(n);
+   public void addElement(Formal n) {
+      // They go in backwards
+      list.add(0, n);
    }
 
-   public Formal get(int i)  { 
-      return list.get(i); 
+   public Formal elementAt(int i)  { 
+      return (Formal)list.elementAt(i); 
    }
 
    public int size() { 

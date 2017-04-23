@@ -11,7 +11,7 @@ public class ClassDeclSimple extends ClassDecl {
     i=ai; vl=avl; ml=aml;
   }
 
-  public void accept(Visitor v) {
+  public void setNode(Visitor v) {
     v.visit(this);
   }
 }
